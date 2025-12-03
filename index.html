@@ -1,172 +1,153 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8" />
-  <title>Gandhi House Feedback</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <style>
-    body { 
-      background-color: lightgreen; 
-      font-family: Arial, sans-serif; 
-      padding:20px; 
-      text-align:center; 
-    }
+    <title>Gandhi House Feedback</title>
+    <style>
+        body {
+            background-color: lightgreen;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
 
-    img {
-      width: 180px;
-      height: auto;
-      display: block;
-      margin: 0 auto 15px auto;
-      border-radius: 12px;
-    }
+        .logo {
+            width: 120px;
+            margin-bottom: 20px;
+        }
 
-    h1 { 
-      text-decoration: underline; 
-      font-weight:bold; 
-      font-size:28px; 
-    }
+        h1 {
+            font-size: 32px;
+            text-decoration: underline;
+            font-weight: bold;
+        }
 
-    .stars {
-      display: flex;
-      flex-direction: row-reverse; /* RIGHT to LEFT */
-      justify-content: center;
-      gap: 8px;
-      font-size: 35px;
-      cursor: pointer;
-      margin-bottom: 18px;
-    }
+        .star-rating {
+            direction: rtl;
+            display: inline-flex;
+            margin-bottom: 20px;
+        }
 
-    .star {
-      color: #555;
-      transition: 0.2s;
-    }
+        .star-rating input {
+            display: none;
+        }
 
-    .star.selected,
-    .star:hover,
-    .star:hover ~ .star {
-      color: gold;
-    }
+        .star-rating label {
+            font-size: 40px;
+            color: #ccc;
+            cursor: pointer;
+        }
 
-    .row { 
-      margin:18px auto; 
-      width:320px; 
-      text-align:left; 
-    }
+        .star-rating input:checked ~ label {
+            color: gold;
+        }
 
-    label { 
-      font-weight:bold; 
-      display:block; 
-      margin-bottom:6px; 
-    }
+        .star-rating label:hover,
+        .star-rating label:hover ~ label {
+            color: gold;
+        }
 
-    input, textarea {
-      width:100%; 
-      padding:8px; 
-      border-radius:6px; 
-      border:1px solid #333; 
-      font-size:16px; 
-    }
+        form {
+            margin-top: 20px;
+        }
 
-    button { 
-      margin-top:18px; 
-      padding:10px 20px; 
-      background:#222; 
-      color:#fff; 
-      border-radius:6px; 
-      border:none; 
-      cursor:pointer; 
-      font-size:16px; 
-    }
+        input, textarea {
+            padding: 10px;
+            width: 60%;
+            margin: 10px;
+            border-radius: 5px;
+            border: 1px solid #333;
+        }
 
-    #thankyou { 
-      display:none; 
-      margin-top:18px; 
-      font-size:20px; 
-      color:darkgreen; 
-      font-weight:bold;
-      animation: fade 1s ease;
-    }
+        button {
+            padding: 12px 30px;
+            font-size: 18px;
+            border: none;
+            background-color: darkgreen;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+        }
 
-    @keyframes fade {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-  </style>
+        #thankyouMessage {
+            display: none;
+            font-size: 28px;
+            margin-top: 40px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
 </head>
 <body>
 
-  <!-- TOP IMAGE -->
-  <img src="gandhi house.png" alt="Gandhi House Logo">
+    <!-- Top Logo -->
+    <img src="gandhi house.png" class="logo" alt="House Logo">
 
-  <h1>GANDHI HOUSE</h1>
+    <h1>GANDHI HOUSE</h1>
 
-  <!-- RIGHT-ALIGNED STAR RATING -->
-  <div class="stars">
-    <span class="star" data-value="5">★</span>
-    <span class="star" data-value="4">★</span>
-    <span class="star" data-value="3">★</span>
-    <span class="star" data-value="2">★</span>
-    <span class="star" data-value="1">★</span>
-  </div>
+    <!-- ⭐ Rating Form -->
+    <form id="feedbackForm" action=""https://formspree.io/f/myzrjavg method="POST">
 
-  <input type="hidden" id="rating" value="5">
+        <!-- Stars -->
+        <div class="star-rating">
+            <input type="radio" name="rating" id="star5" value="5" required>
+            <label for="star5">★</label>
 
-  <div class="row">
-    <label>Your Name (required)</label>
-    <input id="name" type="text" placeholder="Your name" />
-  </div>
+            <input type="radio" name="rating" id="star4" value="4">
+            <label for="star4">★</label>
 
-  <div class="row">
-    <label>Comment (optional)</label>
-    <textarea id="comment" rows="2" placeholder="Write feedback..."></textarea>
-  </div>
+            <input type="radio" name="rating" id="star3" value="3">
+            <label for="star3">★</label>
 
-  <button onclick="submitFeedback()">Submit</button>
+            <input type="radio" name="rating" id="star2" value="2">
+            <label for="star2">★</label>
 
-  <div id="thankyou">🎉 THANK YOU FOR YOUR FEEDBACK! 🎉</div>
+            <input type="radio" name="rating" id="star1" value="1">
+            <label for="star1">★</label>
+        </div>
 
-<script>
-let stars = document.querySelectorAll('.star');
-stars.forEach(star => {
-  star.addEventListener('click', function() {
-    stars.forEach(s => s.classList.remove('selected'));
-    this.classList.add('selected');
-    document.getElementById('rating').value = this.getAttribute('data-value');
-  });
-});
+        <!-- Name -->
+        <div>
+            <label><b>Name:</b></label>
+            <input type="text" name="name" placeholder="Enter your name" required>
+        </div>
 
-function submitFeedback(){
-  const name = document.getElementById('name').value.trim();
-  if(!name){
-    alert('Please enter your name.');
-    return;
-  }
+        <!-- Comment -->
+        <div>
+            <label><b>Comment:</b></label>
+            <textarea name="comment" placeholder="Write your feedback... (optional)"></textarea>
+        </div>
 
-  const payload = {
-    name: name,
-    rating: document.getElementById('rating').value,
-    comment: document.getElementById('comment').value
-  };
+        <button type="submit">Submit</button>
+    </form>
 
-  fetch('https://formspree.io/f/myzrjavg', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    },
-    body: JSON.stringify(payload)
-  })
-  .then(resp => {
-    if(resp.ok){
-      document.getElementById('thankyou').style.display = 'block';
-    } else {
-      alert('Submission failed: ' + resp.status);
-    }
-  })
-  .catch(() => alert('Network error'));
-}
-</script>
+    <!-- Thank You Message -->
+    <div id="thankyouMessage">
+        🎉 <b>Thank You for Rating Gandhi House!</b> 🎉 <br>
+        Your feedback has been submitted successfully!
+    </div>
 
+    <script>
+        // Hide form and show thank you after submission
+        const form = document.getElementById("feedbackForm");
+        const thankYou = document.getElementById("thankyouMessage");
+
+        form.addEventListener("submit", function(event) {
+            event.preventDefault(); // stop default form behavior
+
+            // POST form data to Formspree
+            fetch(form.action, {
+                method: "POST",
+                body: new FormData(form),
+                headers: { "Accept": "application/json" }
+            }).then(response => {
+                form.style.display = "none";     // hide form
+                thankYou.style.display = "block"; // show thank you message
+            });
+        });
+    </script>
 </body>
 </html>
-
