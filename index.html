@@ -1,147 +1,172 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gandhi House Feedback</title>
-    <style>
-        body {
-            background-color: #ccffcc;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            padding: 40px;
-        }
-        .container {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            width: 380px;
-            text-align: center;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        }
-        .logo {
-            width: 120px;
-            margin-bottom: 10px;
-        }
-        h1 {
-            font-size: 26px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-        .stars {
-            direction: rtl;
-            display: inline-flex;
-            margin-bottom: 20px;
-        }
-        .stars input {
-            display: none;
-        }
-        .stars label {
-            font-size: 35px;
-            color: #ccc;
-            cursor: pointer;
-            padding: 5px;
-        }
-        .stars input:checked ~ label {
-            color: gold;
-        }
-        .stars label:hover,
-        .stars label:hover ~ label {
-            color: gold;
-        }
-        input[type="text"], textarea {
-            width: 95%;
-            padding: 8px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border: 1px solid #888;
-        }
-        button {
-            padding: 10px 20px;
-            background: green;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        .status {
-            margin-top: 15px;
-            font-weight: bold;
-        }
-        .fade-in {
-            opacity: 0;
-            animation: fadeIn 1.2s forwards;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+  <meta charset="utf-8" />
+  <title>Gandhi House Feedback</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    body { 
+      background-color: lightgreen; 
+      font-family: Arial, sans-serif; 
+      padding:20px; 
+      text-align:center; 
+    }
+
+    img {
+      width: 180px;
+      height: auto;
+      display: block;
+      margin: 0 auto 15px auto;
+      border-radius: 12px;
+    }
+
+    h1 { 
+      text-decoration: underline; 
+      font-weight:bold; 
+      font-size:28px; 
+    }
+
+    .stars {
+      display: flex;
+      flex-direction: row-reverse; /* RIGHT to LEFT */
+      justify-content: center;
+      gap: 8px;
+      font-size: 35px;
+      cursor: pointer;
+      margin-bottom: 18px;
+    }
+
+    .star {
+      color: #555;
+      transition: 0.2s;
+    }
+
+    .star.selected,
+    .star:hover,
+    .star:hover ~ .star {
+      color: gold;
+    }
+
+    .row { 
+      margin:18px auto; 
+      width:320px; 
+      text-align:left; 
+    }
+
+    label { 
+      font-weight:bold; 
+      display:block; 
+      margin-bottom:6px; 
+    }
+
+    input, textarea {
+      width:100%; 
+      padding:8px; 
+      border-radius:6px; 
+      border:1px solid #333; 
+      font-size:16px; 
+    }
+
+    button { 
+      margin-top:18px; 
+      padding:10px 20px; 
+      background:#222; 
+      color:#fff; 
+      border-radius:6px; 
+      border:none; 
+      cursor:pointer; 
+      font-size:16px; 
+    }
+
+    #thankyou { 
+      display:none; 
+      margin-top:18px; 
+      font-size:20px; 
+      color:darkgreen; 
+      font-weight:bold;
+      animation: fade 1s ease;
+    }
+
+    @keyframes fade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <img src="gandhi house.png" class="logo" alt="Logo" />
-        <h1 style="text-decoration:underline;">GANDHI HOUSE</h1>
 
-        <form id="feedbackForm" action="YOUR_FORMSPREE_URL_HERE" method="POST">
+  <!-- TOP IMAGE -->
+  <img src="gandhi house.png" alt="Gandhi House Logo">
 
-            <div class="stars" style="margin-bottom:25px;">
-                <input type="radio" name="rate" id="star5" value="5" required />
-                <label for="star5">★</label>
-                <input type="radio" name="rate" id="star4" value="4" />
-                <label for="star4">★</label>
-                <input type="radio" name="rate" id="star3" value="3" />
-                <label for="star3">★</label>
-                <input type="radio" name="rate" id="star2" value="2" />
-                <label for="star2">★</label>
-                <input type="radio" name="rate" id="star1" value="1" />
-                <label for="star1">★</label>
-            </div>
+  <h1>GANDHI HOUSE</h1>
 
-            <div style="display:flex; align-items:center; margin-bottom:15px;">
-                <label style="width:100px;"><b>Name:</b></label>
-                <input type="text" name="name" id="name" required style="flex:1;" />
-            </div>
+  <!-- RIGHT-ALIGNED STAR RATING -->
+  <div class="stars">
+    <span class="star" data-value="5">★</span>
+    <span class="star" data-value="4">★</span>
+    <span class="star" data-value="3">★</span>
+    <span class="star" data-value="2">★</span>
+    <span class="star" data-value="1">★</span>
+  </div>
 
-            <div style="display:flex; align-items:center; margin-bottom:15px;">
-                <label style="width:100px;"><b>Comment:</b></label>
-                <textarea name="comment" id="comment" rows="2" style="flex:1;"></textarea>
-            </div>
+  <input type="hidden" id="rating" value="5">
 
-            <button type="submit">Submit</button>
-        </form>
+  <div class="row">
+    <label>Your Name (required)</label>
+    <input id="name" type="text" placeholder="Your name" />
+  </div>
 
-        
+  <div class="row">
+    <label>Comment (optional)</label>
+    <textarea id="comment" rows="2" placeholder="Write feedback..."></textarea>
+  </div>
 
-        <div id="status" class="status"></div>
-    </div>
+  <button onclick="submitFeedback()">Submit</button>
 
-    <script>
-        document.getElementById("feedbackForm").addEventListener("submit", function (e) {
-            const status = document.getElementById("status");
-            status.classList.add("fade-in");
-            status.innerHTML = "Thank you for your feedback! 😊";
-        });
+  <div id="thankyou">🎉 THANK YOU FOR YOUR FEEDBACK! 🎉</div>
 
-        function showRatings() {
-            let list = "";
+<script>
+let stars = document.querySelectorAll('.star');
+stars.forEach(star => {
+  star.addEventListener('click', function() {
+    stars.forEach(s => s.classList.remove('selected'));
+    this.classList.add('selected');
+    document.getElementById('rating').value = this.getAttribute('data-value');
+  });
+});
 
-            for (let i = 0; i < localStorage.length; i++) {
-                const key = localStorage.key(i);
+function submitFeedback(){
+  const name = document.getElementById('name').value.trim();
+  if(!name){
+    alert('Please enter your name.');
+    return;
+  }
 
-                if (key.endsWith("_rated")) {
-                    const data = JSON.parse(localStorage.getItem(key));
-                    const name = key.replace("_rated", "");
-                    list += `${name} — Rated: ${data.stars} stars<br>`;
-                }
-            }
+  const payload = {
+    name: name,
+    rating: document.getElementById('rating').value,
+    comment: document.getElementById('comment').value
+  };
 
-            document.getElementById("status").innerHTML = list || "No ratings yet.";
-            document.getElementById("status").classList.add("fade-in");
-        }
-    </script>
+  fetch('https://formspree.io/f/myzrjavg', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  })
+  .then(resp => {
+    if(resp.ok){
+      document.getElementById('thankyou').style.display = 'block';
+    } else {
+      alert('Submission failed: ' + resp.status);
+    }
+  })
+  .catch(() => alert('Network error'));
+}
+</script>
+
 </body>
 </html>
 
