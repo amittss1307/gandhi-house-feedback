@@ -11,7 +11,7 @@
         }
 
         .logo {
-            width: 120px;
+            width: 140px;
             margin-bottom: 20px;
         }
 
@@ -46,10 +46,6 @@
             color: gold;
         }
 
-        form {
-            margin-top: 20px;
-        }
-
         input, textarea {
             padding: 10px;
             width: 60%;
@@ -72,24 +68,17 @@
             display: none;
             font-size: 28px;
             margin-top: 40px;
-            animation: fadeIn 1s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.8); }
-            to { opacity: 1; transform: scale(1); }
         }
     </style>
 </head>
 <body>
 
-    <!-- Top Logo -->
-    <img src="gandhi house.png" class="logo" alt="House Logo">
+    <!-- TOP IMAGE -->
+    <img src="gandhi-house.png" class="logo" alt="House Logo">
 
     <h1>GANDHI HOUSE</h1>
 
-    <!-- ⭐ Rating Form -->
-    <form id="feedbackForm" action=""https://formspree.io/f/myzrjavg method="POST">
+    <form id="feedbackForm" action="https://formspree.io/f/myzrjavg" method="POST">
 
         <!-- Stars -->
         <div class="star-rating">
@@ -124,30 +113,29 @@
         <button type="submit">Submit</button>
     </form>
 
-    <!-- Thank You Message -->
+    <!-- THANK YOU PAGE -->
     <div id="thankyouMessage">
-        🎉 <b>Thank You for Rating Gandhi House!</b> 🎉 <br>
-        Your feedback has been submitted successfully!
+        🎉 <b>Thank You for Rating Gandhi House!</b> 🎉<br><br>
+        Your feedback has been submitted.
     </div>
 
     <script>
-        // Hide form and show thank you after submission
         const form = document.getElementById("feedbackForm");
         const thankYou = document.getElementById("thankyouMessage");
 
         form.addEventListener("submit", function(event) {
-            event.preventDefault(); // stop default form behavior
+            event.preventDefault();
 
-            // POST form data to Formspree
             fetch(form.action, {
                 method: "POST",
                 body: new FormData(form),
                 headers: { "Accept": "application/json" }
-            }).then(response => {
-                form.style.display = "none";     // hide form
-                thankYou.style.display = "block"; // show thank you message
+            }).then(() => {
+                form.style.display = "none";
+                thankYou.style.display = "block";
             });
         });
     </script>
+
 </body>
 </html>
