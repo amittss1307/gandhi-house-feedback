@@ -1,163 +1,139 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Gandhi House Feedback</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Form</title>
+
     <style>
         body {
-            background-color: lightgreen;
             font-family: Arial, sans-serif;
-            text-align: center;
+            background-color: #c8f7c5; /* light green */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            margin: 0;
             padding: 20px;
+            text-align: center;
         }
 
-        .logo {
-            width: 140px;
-            max-width: 40%;
-            height: auto;
-            margin-bottom: 20px;
+        .container {
+            background: white;
+            width: 100%;
+            max-width: 380px;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        h1 {
-            font-size: 32px;
-            text-decoration: underline;
-            font-weight: bold;
+        img {
+            width: 120px;
+            margin-bottom: 15px;
         }
 
-        .star-rating {
-            direction: rtl;
-            display: inline-flex;
-            gap: 5px;
-            margin-bottom: 20px;
+        h2 {
+            margin-bottom: 10px;
         }
 
-        .star-rating input { display: none; }
+        .stars {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 15px 0;
+        }
 
-        .star-rating label {
-            font-size: 40px;
-            color: #ccc;
+        .stars span {
+            font-size: 35px;
             cursor: pointer;
         }
 
-        .star-rating input:checked ~ label { color: gold; }
-
-        .star-rating label:hover,
-        .star-rating label:hover ~ label { color: gold; }
-
-        input, textarea {
-            padding: 12px;
-            width: 60%;
-            max-width: 500px;
-            margin: 10px auto;
-            display: block;
-            border-radius: 5px;
-            border: 1px solid #333;
-            font-size: 16px;
+        textarea {
+            width: 100%;
+            height: 80px;
+            margin-top: 12px;
+            padding: 10px;
+            font-size: 14px;
+            border-radius: 8px;
+            border: 1px solid #aaa;
         }
 
         button {
-            padding: 14px 30px;
-            font-size: 18px;
-            border: none;
-            background-color: darkgreen;
+            width: 100%;
+            margin-top: 18px;
+            padding: 12px;
+            background: green;
             color: white;
+            border: none;
             border-radius: 8px;
+            font-size: 16px;
             cursor: pointer;
-            width: 60%;
-            max-width: 300px;
         }
 
-        #thankyouMessage {
+        .thankyou {
             display: none;
-            font-size: 26px;
+            font-size: 24px;
             margin-top: 40px;
-        }
-
-        /* Responsive layout for mobile */
-        @media (max-width: 600px) {
-
-            h1 { font-size: 24px; }
-
-            .star-rating label { font-size: 32px; }
-
-            input, textarea, button {
-                width: 90%;
-                font-size: 16px;
-            }
-
-            .logo {
-                width: 120px;
-                max-width: 60%;
-            }
-
-            #thankyouMessage {
-                font-size: 22px;
-                padding: 10px;
-            }
+            color: green;
         }
     </style>
 </head>
 <body>
 
-    <!-- Top Logo -->
-    <img src="gandhi house.png" class="logo" alt="House Logo">
+<div class="container" id="formContainer">
 
-    <h1>GANDHI HOUSE</h1>
+    <img src="gandhi house.png" alt="Top Image">
 
-    <!-- Feedback Form -->
-    <form id="feedbackForm"
-          action="https://formspree.io/f/myzrjavg"
-          method="POST"
-          target="hiddenFrame">
+    <h2>Rate Your Experience</h2>
 
-        <div class="star-rating">
-            <input type="radio" name="rating" id="star5" value="5" required>
-            <label for="star5">★</label>
+    <form id="feedbackForm" action="https://formspree.io/f/myzrjavg" method="POST">
 
-            <input type="radio" name="rating" id="star4" value="4">
-            <label for="star4">★</label>
-
-            <input type="radio" name="rating" id="star3" value="3">
-            <label for="star3">★</label>
-
-            <input type="radio" name="rating" id="star2" value="2">
-            <label for="star2">★</label>
-
-            <input type="radio" name="rating" id="star1" value="1">
-            <label for="star1">★</label>
+        <div class="stars">
+            <span onclick="rate(1)">⭐</span>
+            <span onclick="rate(2)">⭐</span>
+            <span onclick="rate(3)">⭐</span>
+            <span onclick="rate(4)">⭐</span>
+            <span onclick="rate(5)">⭐</span>
         </div>
 
-        <div>
-            <label><b>Name:</b></label>
-            <input type="text" name="name" placeholder="Enter your name" required>
-        </div>
+        <input type="hidden" name="rating" id="rating">
 
-        <div>
-            <label><b>Comment:</b></label>
-            <textarea name="comment" placeholder="Write your feedback... (optional)"></textarea>
-        </div>
-
-        <input type="hidden" name="_redirect" value="thankyou.html">
+        <textarea name="message" placeholder="Write your feedback..."></textarea>
 
         <button type="submit">Submit</button>
     </form>
 
-    <!-- Thank You Message -->
-    <div id="thankyouMessage">
-        🎉 <b>Thank You for Rating Gandhi House!</b> 🎉<br><br>
-        Your feedback has been submitted successfully.
-    </div>
+</div>
 
-    <iframe name="hiddenFrame" style="display:none;"></iframe>
+<div class="thankyou" id="thankYouMsg">
+    🎉 Thank you for your feedback!
+</div>
 
-    <script>
-        const form = document.getElementById("feedbackForm");
-        const thankYou = document.getElementById("thankyouMessage");
+<script>
+    function rate(num) {
+        document.getElementById("rating").value = num;
+        let stars = document.querySelectorAll(".stars span");
+        stars.forEach((s, i) => s.style.color = i < num ? "gold" : "black");
+    }
 
-        form.addEventListener("submit", function () {
-            form.style.display = "none";
-            thankYou.style.display = "block";
+    document.getElementById("feedbackForm").addEventListener("submit", async function(e) {
+        e.preventDefault();
+
+        const form = e.target;
+        const data = new FormData(form);
+
+        await fetch(form.action, {
+            method: form.method,
+            body: data,
+            headers: { 'Accept': 'application/json' }
         });
-    </script>
+
+        // Hide form + show thank you
+        document.getElementById("formContainer").style.display = "none";
+        document.getElementById("thankYouMsg").style.display = "block";
+    });
+</script>
 
 </body>
 </html>
+
