@@ -12,6 +12,8 @@
 
         .logo {
             width: 140px;
+            max-width: 40%;
+            height: auto;
             margin-bottom: 20px;
         }
 
@@ -24,12 +26,11 @@
         .star-rating {
             direction: rtl;
             display: inline-flex;
+            gap: 5px;
             margin-bottom: 20px;
         }
 
-        .star-rating input {
-            display: none;
-        }
+        .star-rating input { display: none; }
 
         .star-rating label {
             font-size: 40px;
@@ -37,49 +38,73 @@
             cursor: pointer;
         }
 
-        .star-rating input:checked ~ label {
-            color: gold;
-        }
+        .star-rating input:checked ~ label { color: gold; }
 
         .star-rating label:hover,
-        .star-rating label:hover ~ label {
-            color: gold;
-        }
+        .star-rating label:hover ~ label { color: gold; }
 
         input, textarea {
-            padding: 10px;
+            padding: 12px;
             width: 60%;
-            margin: 10px;
+            max-width: 500px;
+            margin: 10px auto;
+            display: block;
             border-radius: 5px;
             border: 1px solid #333;
+            font-size: 16px;
         }
 
         button {
-            padding: 12px 30px;
+            padding: 14px 30px;
             font-size: 18px;
             border: none;
             background-color: darkgreen;
             color: white;
             border-radius: 8px;
             cursor: pointer;
+            width: 60%;
+            max-width: 300px;
         }
 
         #thankyouMessage {
             display: none;
-            font-size: 28px;
+            font-size: 26px;
             margin-top: 40px;
+        }
+
+        /* Responsive layout for mobile */
+        @media (max-width: 600px) {
+
+            h1 { font-size: 24px; }
+
+            .star-rating label { font-size: 32px; }
+
+            input, textarea, button {
+                width: 90%;
+                font-size: 16px;
+            }
+
+            .logo {
+                width: 120px;
+                max-width: 60%;
+            }
+
+            #thankyouMessage {
+                font-size: 22px;
+                padding: 10px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- TOP IMAGE -->
+    <!-- Top Logo -->
     <img src="gandhi house.png" class="logo" alt="House Logo">
 
     <h1>GANDHI HOUSE</h1>
 
-    <!-- FORM (NO FETCH, 100% PHONE WORKING) -->
-    <form id="feedbackForm" 
+    <!-- Feedback Form -->
+    <form id="feedbackForm"
           action="https://formspree.io/f/myzrjavg"
           method="POST"
           target="hiddenFrame">
@@ -111,16 +136,15 @@
             <textarea name="comment" placeholder="Write your feedback... (optional)"></textarea>
         </div>
 
-        <!-- Required by Formspree to NOT redirect to 405 page -->
         <input type="hidden" name="_redirect" value="thankyou.html">
 
         <button type="submit">Submit</button>
     </form>
 
-    <!-- THANK YOU MESSAGE -->
+    <!-- Thank You Message -->
     <div id="thankyouMessage">
         🎉 <b>Thank You for Rating Gandhi House!</b> 🎉<br><br>
-        Your feedback has been submitted.
+        Your feedback has been submitted successfully.
     </div>
 
     <iframe name="hiddenFrame" style="display:none;"></iframe>
@@ -129,7 +153,7 @@
         const form = document.getElementById("feedbackForm");
         const thankYou = document.getElementById("thankyouMessage");
 
-        form.addEventListener("submit", function() {
+        form.addEventListener("submit", function () {
             form.style.display = "none";
             thankYou.style.display = "block";
         });
