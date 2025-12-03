@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gandhi House Feedback</title>
+    <style>
+        body {
+            background-color: #ccffcc;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 40px;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            width: 380px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .logo {
+            width: 120px;
+            margin-bottom: 10px;
+        }
+        h1 {
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .stars {
+            direction: rtl;
+            display: inline-flex;
+            margin-bottom: 20px;
+        }
+        .stars input {
+            display: none;
+        }
+        .stars label {
+            font-size: 35px;
+            color: #ccc;
+            cursor: pointer;
+            padding: 5px;
+        }
+        .stars input:checked ~ label {
+            color: gold;
+        }
+        .stars label:hover,
+        .stars label:hover ~ label {
+            color: gold;
+        }
+        input[type="text"], textarea {
+            width: 95%;
+            padding: 8px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #888;
+        }
+        button {
+            padding: 10px 20px;
+            background: green;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .status {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 1.2s forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="gandhi house.png" class="logo" alt="Logo" />
+        <h1 style="text-decoration:underline;">GANDHI HOUSE</h1>
+
+        <form id="feedbackForm" action="YOUR_FORMSPREE_URL_HERE" method="POST">
+
+            <div class="stars" style="margin-bottom:25px;">
+                <input type="radio" name="rate" id="star5" value="5" required />
+                <label for="star5">★</label>
+                <input type="radio" name="rate" id="star4" value="4" />
+                <label for="star4">★</label>
+                <input type="radio" name="rate" id="star3" value="3" />
+                <label for="star3">★</label>
+                <input type="radio" name="rate" id="star2" value="2" />
+                <label for="star2">★</label>
+                <input type="radio" name="rate" id="star1" value="1" />
+                <label for="star1">★</label>
+            </div>
+
+            <div style="display:flex; align-items:center; margin-bottom:15px;">
+                <label style="width:100px;"><b>Name:</b></label>
+                <input type="text" name="name" id="name" required style="flex:1;" />
+            </div>
+
+            <div style="display:flex; align-items:center; margin-bottom:15px;">
+                <label style="width:100px;"><b>Comment:</b></label>
+                <textarea name="comment" id="comment" rows="2" style="flex:1;"></textarea>
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+
+        
+
+        <div id="status" class="status"></div>
+    </div>
+
+    <script>
+        document.getElementById("feedbackForm").addEventListener("submit", function (e) {
+            const status = document.getElementById("status");
+            status.classList.add("fade-in");
+            status.innerHTML = "Thank you for your feedback! 😊";
+        });
+
+        function showRatings() {
+            let list = "";
+
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+
+                if (key.endsWith("_rated")) {
+                    const data = JSON.parse(localStorage.getItem(key));
+                    const name = key.replace("_rated", "");
+                    list += `${name} — Rated: ${data.stars} stars<br>`;
+                }
+            }
+
+            document.getElementById("status").innerHTML = list || "No ratings yet.";
+            document.getElementById("status").classList.add("fade-in");
+        }
+    </script>
+</body>
+</html>
+
