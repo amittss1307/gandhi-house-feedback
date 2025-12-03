@@ -1,139 +1,139 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feedback Form</title>
-
+    <title>Gandhi House Feedback</title>
     <style>
         body {
+            background-color: lightgreen;
             font-family: Arial, sans-serif;
-            background-color: #c8f7c5; /* light green */
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            margin: 0;
-            padding: 20px;
             text-align: center;
-        }
-
-        .container {
-            background: white;
-            width: 100%;
-            max-width: 380px;
             padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        img {
-            width: 120px;
-            margin-bottom: 15px;
+        .logo {
+            width: 140px;
+            margin-bottom: 20px;
         }
 
-        h2 {
-            margin-bottom: 10px;
+        h1 {
+            font-size: 32px;
+            text-decoration: underline;
+            font-weight: bold;
         }
 
-        .stars {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin: 15px 0;
+        .star-rating {
+            direction: rtl;
+            display: inline-flex;
+            margin-bottom: 20px;
         }
 
-        .stars span {
-            font-size: 35px;
+        .star-rating input {
+            display: none;
+        }
+
+        .star-rating label {
+            font-size: 40px;
+            color: #ccc;
             cursor: pointer;
         }
 
-        textarea {
-            width: 100%;
-            height: 80px;
-            margin-top: 12px;
+        .star-rating input:checked ~ label {
+            color: gold;
+        }
+
+        .star-rating label:hover,
+        .star-rating label:hover ~ label {
+            color: gold;
+        }
+
+        input, textarea {
             padding: 10px;
-            font-size: 14px;
-            border-radius: 8px;
-            border: 1px solid #aaa;
+            width: 60%;
+            margin: 10px;
+            border-radius: 5px;
+            border: 1px solid #333;
         }
 
         button {
-            width: 100%;
-            margin-top: 18px;
-            padding: 12px;
-            background: green;
-            color: white;
+            padding: 12px 30px;
+            font-size: 18px;
             border: none;
+            background-color: darkgreen;
+            color: white;
             border-radius: 8px;
-            font-size: 16px;
             cursor: pointer;
         }
 
-        .thankyou {
+        #thankyouMessage {
             display: none;
-            font-size: 24px;
+            font-size: 28px;
             margin-top: 40px;
-            color: green;
         }
     </style>
 </head>
 <body>
 
-<div class="container" id="formContainer">
+    <!-- TOP IMAGE -->
+    <img src="gandhi house.png" class="logo" alt="House Logo">
 
-    <img src="gandhi house.png" alt="Top Image">
+    <h1>GANDHI HOUSE</h1>
 
-    <h2>Rate Your Experience</h2>
+    <!-- FORM (NO FETCH, 100% PHONE WORKING) -->
+    <form id="feedbackForm" 
+          action="https://formspree.io/f/myzrjavg"
+          method="POST"
+          target="hiddenFrame">
 
-    <form id="feedbackForm" action="https://formspree.io/f/myzrjavg" method="POST">
+        <div class="star-rating">
+            <input type="radio" name="rating" id="star5" value="5" required>
+            <label for="star5">★</label>
 
-        <div class="stars">
-            <span onclick="rate(1)">⭐</span>
-            <span onclick="rate(2)">⭐</span>
-            <span onclick="rate(3)">⭐</span>
-            <span onclick="rate(4)">⭐</span>
-            <span onclick="rate(5)">⭐</span>
+            <input type="radio" name="rating" id="star4" value="4">
+            <label for="star4">★</label>
+
+            <input type="radio" name="rating" id="star3" value="3">
+            <label for="star3">★</label>
+
+            <input type="radio" name="rating" id="star2" value="2">
+            <label for="star2">★</label>
+
+            <input type="radio" name="rating" id="star1" value="1">
+            <label for="star1">★</label>
         </div>
 
-        <input type="hidden" name="rating" id="rating">
+        <div>
+            <label><b>Name:</b></label>
+            <input type="text" name="name" placeholder="Enter your name" required>
+        </div>
 
-        <textarea name="message" placeholder="Write your feedback..."></textarea>
+        <div>
+            <label><b>Comment:</b></label>
+            <textarea name="comment" placeholder="Write your feedback... (optional)"></textarea>
+        </div>
+
+        <!-- Required by Formspree to NOT redirect to 405 page -->
+        <input type="hidden" name="_redirect" value="thankyou.html">
 
         <button type="submit">Submit</button>
     </form>
 
-</div>
+    <!-- THANK YOU MESSAGE -->
+    <div id="thankyouMessage">
+        🎉 <b>Thank You for Rating Gandhi House!</b> 🎉<br><br>
+        Your feedback has been submitted.
+    </div>
 
-<div class="thankyou" id="thankYouMsg">
-    🎉 Thank you for your feedback!
-</div>
+    <iframe name="hiddenFrame" style="display:none;"></iframe>
 
-<script>
-    function rate(num) {
-        document.getElementById("rating").value = num;
-        let stars = document.querySelectorAll(".stars span");
-        stars.forEach((s, i) => s.style.color = i < num ? "gold" : "black");
-    }
+    <script>
+        const form = document.getElementById("feedbackForm");
+        const thankYou = document.getElementById("thankyouMessage");
 
-    document.getElementById("feedbackForm").addEventListener("submit", async function(e) {
-        e.preventDefault();
-
-        const form = e.target;
-        const data = new FormData(form);
-
-        await fetch(form.action, {
-            method: form.method,
-            body: data,
-            headers: { 'Accept': 'application/json' }
+        form.addEventListener("submit", function() {
+            form.style.display = "none";
+            thankYou.style.display = "block";
         });
-
-        // Hide form + show thank you
-        document.getElementById("formContainer").style.display = "none";
-        document.getElementById("thankYouMsg").style.display = "block";
-    });
-</script>
+    </script>
 
 </body>
 </html>
-
