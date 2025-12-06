@@ -1,8 +1,6 @@
 <html>
 <head>
     <title>Gandhi House Feedback</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <style>
         body {
             background-color: lightgreen;
@@ -17,9 +15,32 @@
         }
 
         h1 {
-            font-size: 28px;
+            font-size: 32px;
             text-decoration: underline;
             font-weight: bold;
+        }
+
+        /* COMMENT + LABEL ALIGNMENT FIX */
+        label {
+            display: block;
+            text-align: left;
+            width: 60%;
+            margin: 0 auto 5px auto;
+            font-weight: bold;
+        }
+
+        /* Form Elements */
+        input, textarea, select {
+            padding: 10px;
+            width: 60%;
+            margin: 10px auto;
+            border-radius: 5px;
+            border: 1px solid #333;
+            display: block;
+        }
+
+        textarea {
+            height: 120px;
         }
 
         .star-rating {
@@ -33,7 +54,7 @@
         }
 
         .star-rating label {
-            font-size: 36px;
+            font-size: 40px;
             color: #ccc;
             cursor: pointer;
         }
@@ -45,36 +66,6 @@
         .star-rating label:hover,
         .star-rating label:hover ~ label {
             color: gold;
-        }
-
-        input, textarea {
-            padding: 10px;
-            width: 80%;
-            margin: 10px;
-            border-radius: 5px;
-            border: 1px solid #333;
-            font-size: 16px;
-        }
-
-        .question-box {
-            background: white;
-            width: 85%;
-            margin: auto;
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 15px;
-            text-align: left;
-            border: 1px solid #333;
-        }
-
-        .question-box label {
-            font-size: 17px;
-            font-weight: bold;
-        }
-
-        .question-box textarea {
-            width: 100%;
-            height: 80px;
         }
 
         button {
@@ -89,7 +80,7 @@
 
         #thankyouMessage {
             display: none;
-            font-size: 24px;
+            font-size: 28px;
             margin-top: 40px;
         }
     </style>
@@ -102,7 +93,7 @@
 
     <form id="feedbackForm" action="https://formspree.io/f/myzrjavg" method="POST">
 
-        <!-- ⭐ Star Rating -->
+        <!-- Rating -->
         <div class="star-rating">
             <input type="radio" name="rating" id="star5" value="5" required>
             <label for="star5">★</label>
@@ -121,42 +112,36 @@
         </div>
 
         <!-- Name -->
-        <div>
-            <label><b>Name:</b></label>
-            <input type="text" name="name" placeholder="Enter your name" required>
-        </div>
+        <label>Name:</label>
+        <input type="text" name="name" placeholder="Enter your name" required>
 
-        <!-- Q1: Visitor Type -->
-        <div class="question-box">
-            <label>1. You are a (Visitor Type):</label><br><br>
-            <input type="radio" name="visitor_type" value="Student" required> Student<br>
-            <input type="radio" name="visitor_type" value="Teacher"> Teacher<br>
-            <input type="radio" name="visitor_type" value="Parent"> Parent<br>
-            <input type="radio" name="visitor_type" value="Guest"> Guest<br>
-            <input type="radio" name="visitor_type" value="Judge"> Judge<br>
-        </div>
+        <!-- Q1 — Visitor Type -->
+        <label>You are a (Visitor Type):</label>
+        <select name="visitor_type" required>
+            <option value="">-- Select --</option>
+            <option>Student</option>
+            <option>Teacher</option>
+            <option>Parent</option>
+            <option>Guest</option>
+            <option>Judge</option>
+        </select>
 
-        <!-- Q2: Model liked the most -->
-        <div class="question-box">
-            <label>2. Which model/activity did you like the most?</label><br><br>
-            <textarea name="favorite_model" placeholder="Write your answer here..."></textarea>
-        </div>
+        <!-- Q2 — Favorite Model -->
+        <label>Which model/activity did you like the most?</label>
+        <textarea name="favorite_model" placeholder="Write your answer..."></textarea>
 
-        <!-- Q3: Suggestions for improvement -->
-        <div class="question-box">
-            <label>3. What should we improve next time?</label><br><br>
-            <textarea name="improvement_suggestions" placeholder="Write your suggestions here..."></textarea>
-        </div>
+        <!-- Q3 — Improvements -->
+        <label>What should we improve next time?</label>
+        <textarea name="improvement" placeholder="Write your suggestions..."></textarea>
 
-        <!-- Comment (original) -->
-        <div>
-            <label><b>Comment:</b></label>
-            <textarea name="comment" placeholder="Write your feedback... (optional)"></textarea>
-        </div>
+        <!-- Comment -->
+        <label>Comment:</label>
+        <textarea name="comment" placeholder="Write your feedback... (optional)"></textarea>
 
         <button type="submit">Submit</button>
     </form>
 
+    <!-- Thank You Message -->
     <div id="thankyouMessage">
         🎉 <b>Thank You for Rating Gandhi House!</b> 🎉<br><br>
         Your feedback has been submitted.
@@ -183,4 +168,4 @@
 </body>
 </html>
 
-
+   
