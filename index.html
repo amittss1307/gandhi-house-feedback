@@ -1,5 +1,8 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gandhi House Feedback</title>
     <style>
         body {
@@ -7,10 +10,11 @@
             font-family: Arial, sans-serif;
             text-align: center;
             padding: 20px;
+            margin: 0;
         }
 
         .logo {
-            width: 140px;
+            width: 120px;
             margin-bottom: 20px;
         }
 
@@ -20,23 +24,31 @@
             font-weight: bold;
         }
 
-        /* COMMENT + LABEL ALIGNMENT FIX */
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 90%;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
         label {
             display: block;
             text-align: left;
-            width: 60%;
-            margin: 0 auto 5px auto;
+            width: 100%;
+            margin-bottom: 5px;
             font-weight: bold;
         }
 
-        /* Form Elements */
         input, textarea, select {
             padding: 10px;
-            width: 60%;
-            margin: 10px auto;
+            width: 100%;
+            max-width: 400px;
+            margin: 10px 0;
             border-radius: 5px;
             border: 1px solid #333;
-            display: block;
+            box-sizing: border-box;
         }
 
         textarea {
@@ -80,8 +92,26 @@
 
         #thankyouMessage {
             display: none;
-            font-size: 28px;
+            font-size: 24px;
             margin-top: 40px;
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 500px) {
+            body {
+                font-size: 16px;
+                padding: 10px;
+            }
+            h1 {
+                font-size: 26px;
+            }
+            button {
+                font-size: 16px;
+                padding: 10px 20px;
+            }
+            .star-rating label {
+                font-size: 32px;
+            }
         }
     </style>
 </head>
@@ -115,7 +145,7 @@
         <label>Name:</label>
         <input type="text" name="name" placeholder="Enter your name" required>
 
-        <!-- Q1 — Visitor Type -->
+        <!-- Visitor Type -->
         <label>You are a (Visitor Type):</label>
         <select name="visitor_type" required>
             <option value="">-- Select --</option>
@@ -126,11 +156,11 @@
             <option>Judge</option>
         </select>
 
-        <!-- Q2 — Favorite Model -->
+        <!-- Favorite Model -->
         <label>Which model/activity did you like the most?</label>
         <textarea name="favorite_model" placeholder="Write your answer..."></textarea>
 
-        <!-- Q3 — Improvements -->
+        <!-- Improvements -->
         <label>What should we improve next time?</label>
         <textarea name="improvement" placeholder="Write your suggestions..."></textarea>
 
@@ -141,7 +171,6 @@
         <button type="submit">Submit</button>
     </form>
 
-    <!-- Thank You Message -->
     <div id="thankyouMessage">
         🎉 <b>Thank You for Rating Gandhi House!</b> 🎉<br><br>
         Your feedback has been submitted.
@@ -167,5 +196,3 @@
 
 </body>
 </html>
-
-   
