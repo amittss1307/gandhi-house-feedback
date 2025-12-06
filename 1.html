@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sachet - Gandhi House</title>
+    <style>
+        body {
+            background-color: #ccffcc; /* light green */
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        .logo {
+            width: 100px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 50px;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <img src="logo.png" alt="Logo" class="logo">
+    <h1><u>GANDHI HOUSE</u></h1>
+    <button onclick="playWord()">Play Word</button>
+
+    <script>
+        function playWord() {
+            const msg = new SpeechSynthesisUtterance('Sachet');
+            msg.rate = 0.9; // speed of pronunciation
+            window.speechSynthesis.speak(msg);
+        }
+    </script>
+</body>
+</html>
+
